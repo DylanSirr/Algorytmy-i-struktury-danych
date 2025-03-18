@@ -30,4 +30,16 @@ def shell_sort(arr):
     
     return propper_array
 
-print(shell_sort([4,14,7,2,1,10,3,8,11,5,12]))
+def selection_sort(arr):
+    n = len(arr)
+    for j in range(n-1):
+        min = j
+        for i in range(j+1,n):
+            if arr[i]<arr[min]:
+                min = i
+        arr[j], arr[min]=arr[min], arr[j]
+    return arr 
+
+# print([4,56,7,3,2,2,5,7])
+# print(selection_sort([4,56,7,3,2,2,5,7]))
+
