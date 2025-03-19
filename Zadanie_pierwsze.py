@@ -43,3 +43,23 @@ def selection_sort(arr):
 # print([4,56,7,3,2,2,5,7])
 # print(selection_sort([4,56,7,3,2,2,5,7]))
 
+def heapify(arr,n,i):
+    max = i
+    left = 2*i+1
+    right = 2*i+2
+    if left<n and arr[left]>arr[max]:
+        max = left
+    if right<n and arr[right]>arr[max]:
+        max = right
+    if max != i:
+        arr[i], arr[max] = arr[max], arr[i]
+        heapify(arr,n,max)
+
+def heap_sort(arr):
+    n = len(arr)
+    for i in range(n//2-1,-1,-1):
+        heapify(arr,n,i)
+    for i in range(n-1,0,-1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr,i,0)
+    return arr
