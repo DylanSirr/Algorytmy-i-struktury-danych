@@ -1,2 +1,0 @@
-# Algorytmy i struktury danych
- 
