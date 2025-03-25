@@ -1,3 +1,5 @@
+import random
+
 def insertion_sort(arr):
     for i in range(1, len(arr)):
         key = arr[i]
@@ -63,3 +65,19 @@ def heap_sort(arr):
         arr[i], arr[0] = arr[0], arr[i]
         heapify(arr,i,0)
     return arr
+
+def quicksort(arr, pivot_type='left'):
+    if len(arr) <= 1:
+        return arr
+    
+    pivot = arr[0] if pivot_type == 'left' else arr[random.randint(0, len(arr) - 1)]
+    
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    
+    return quicksort(left, pivot_type) + middle + quicksort(right, pivot_type)
+
+data = [3, 6, 8, 10, 1, 2, 1]
+print(quicksort(data, 'left'))
+print(quicksort(data, 'random'))
