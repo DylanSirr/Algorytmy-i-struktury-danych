@@ -66,15 +66,25 @@ def heap_sort(arr):
         heapify(arr,i,0)
     return arr
 
-def quicksort(arr, pivot_type='left'):
+def quick_sort_left_pivot(arr):
     if len(arr) <= 1:
         return arr
-    
-    pivot = arr[0] if pivot_type == 'left' else arr[random.randint(0, len(arr) - 1)]
-    
+
+    pivot = arr[0]
     left = [x for x in arr if x < pivot]
     middle = [x for x in arr if x == pivot]
     right = [x for x in arr if x > pivot]
-    
-    return quicksort(left, pivot_type) + middle + quicksort(right, pivot_type)
+
+    return quick_sort_left_pivot(left) + middle + quick_sort_left_pivot(right)
+
+def quick_sort_random_pivot(arr):
+    if len(arr) <= 1:
+        return arr
+
+    pivot = arr[random.randint(0, len(arr) - 1)]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+
+    return quick_sort_random_pivot(left) + middle + quick_sort_random_pivot(right)
 
