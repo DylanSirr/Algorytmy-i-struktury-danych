@@ -1,3 +1,4 @@
+import sys
 import random
 
 def insertion_sort(arr):
@@ -35,35 +36,32 @@ def shell_sort(arr):
 def selection_sort(arr):
     n = len(arr)
     for j in range(n-1):
-        min = j
-        for i in range(j+1,n):
-            if arr[i]<arr[min]:
-                min = i
-        arr[j], arr[min]=arr[min], arr[j]
+        min_idx = j
+        for i in range(j+1, n):
+            if arr[i] < arr[min_idx]:
+                min_idx = i
+        arr[j], arr[min_idx] = arr[min_idx], arr[j]
     return arr 
 
-# print([4,56,7,3,2,2,5,7])
-# print(selection_sort([4,56,7,3,2,2,5,7]))
-
-def heapify(arr,n,i):
-    max = i
-    left = 2*i+1
-    right = 2*i+2
-    if left<n and arr[left]>arr[max]:
-        max = left
-    if right<n and arr[right]>arr[max]:
-        max = right
-    if max != i:
-        arr[i], arr[max] = arr[max], arr[i]
-        heapify(arr,n,max)
+def heapify(arr, n, i):
+    max_idx = i
+    left = 2 * i + 1
+    right = 2 * i + 2
+    if left < n and arr[left] > arr[max_idx]:
+        max_idx = left
+    if right < n and arr[right] > arr[max_idx]:
+        max_idx = right
+    if max_idx != i:
+        arr[i], arr[max_idx] = arr[max_idx], arr[i]
+        heapify(arr, n, max_idx)
 
 def heap_sort(arr):
     n = len(arr)
-    for i in range(n//2-1,-1,-1):
-        heapify(arr,n,i)
-    for i in range(n-1,0,-1):
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+    for i in range(n - 1, 0, -1):
         arr[i], arr[0] = arr[0], arr[i]
-        heapify(arr,i,0)
+        heapify(arr, i, 0)
     return arr
 
 def quick_sort_left_pivot(arr):
@@ -88,3 +86,32 @@ def quick_sort_random_pivot(arr):
 
     return quick_sort_random_pivot(left) + middle + quick_sort_random_pivot(right)
 
+# Mapowanie numeru algorytmu na funkcję
+algorithm_mapping = {
+    "1": insertion_sort,
+    "2": shell_sort,
+    "3": selection_sort,
+    "4": heap_sort,
+    "5": quick_sort_left_pivot,
+    "6": quick_sort_random_pivot
+}
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Użycie: python3 Zadanie_pierwsze.py --algorithm <numer_algorytmu>")
+        sys.exit(1)
+
+    algorithm_number = sys.argv[2] if len(sys.argv) > 2 else None
+    if algorithm_number not in algorithm_mapping:
+        print("Niepoprawny numer algorytmu!")
+        sys.exit(1)
+
+    # Wczytaj dane wejściowe z STDIN
+    input_data = sys.stdin.read().strip().split()
+    input_data = list(map(int, input_data))
+
+    # Uruchom wybrany algorytm
+    sorted_data = algorithm_mapping[algorithm_number](input_data)
+
+    # Wypisz wynik
+    print(" ".join(map(str, sorted_data)))
