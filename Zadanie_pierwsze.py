@@ -1,37 +1,30 @@
 import sys
 import random
 
-def insertion_sort(arr):
-    for i in range(1, len(arr)):
+def insertion_sort(arr, gap):
+    for i in range(gap, len(arr)):
         key = arr[i]
-        j = i - 1
+        j = i - gap
         while j >= 0 and arr[j] > key:
-            arr[j + 1] = arr[j]
-            j -= 1
-        arr[j + 1] = key
+            arr[j + gap] = arr[j]
+            j -= gap
+        arr[j + gap] = key
     return arr
 
 def shell_sort(arr):
-    propper_array = arr[:]
-    k = 0
     shell_gaps = []
+    k = 0
     shell_gap = 1
     while shell_gap < len(arr):
         shell_gaps.append(shell_gap)
         shell_gap = 4**(k+1) + 3*2**k + 1
         k += 1
     shell_gaps.reverse()
-    
+
     for gap in shell_gaps:
-        temp_array = []
-        indices = list(range(0, len(arr), gap))
-        for i in indices:
-            temp_array.append(propper_array[i])
-        temp_array = insertion_sort(temp_array)
-        for i in indices:
-            propper_array[i] = temp_array.pop(0)
+        insertion_sort(arr, gap)
     
-    return propper_array
+    return arr
 
 def selection_sort(arr):
     n = len(arr)
@@ -86,7 +79,6 @@ def quick_sort_random_pivot(arr):
 
     return quick_sort_random_pivot(left) + middle + quick_sort_random_pivot(right)
 
-# Mapowanie numeru algorytmu na funkcję
 algorithm_mapping = {
     "1": insertion_sort,
     "2": shell_sort,
@@ -106,12 +98,9 @@ if __name__ == "__main__":
         print("Niepoprawny numer algorytmu!")
         sys.exit(1)
 
-    # Wczytaj dane wejściowe z STDIN
     input_data = sys.stdin.read().strip().split()
     input_data = list(map(int, input_data))
 
-    # Uruchom wybrany algorytm
     sorted_data = algorithm_mapping[algorithm_number](input_data)
 
-    # Wypisz wynik
     print(" ".join(map(str, sorted_data)))
