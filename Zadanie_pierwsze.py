@@ -78,6 +78,3 @@ def quicksort(arr, pivot_type='left'):
     
     return quicksort(left, pivot_type) + middle + quicksort(right, pivot_type)
 
-data = [3, 6, 8, 10, 1, 2, 1]
-print(quicksort(data, 'left'))
-print(quicksort(data, 'random'))
