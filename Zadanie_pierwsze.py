@@ -1,7 +1,17 @@
 import sys
 import random
 
-def insertion_sort(arr, gap):
+def insertion_sort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+    return arr
+
+def insertion_sort2(arr, gap):
     for i in range(gap, len(arr)):
         key = arr[i]
         j = i - gap
@@ -22,7 +32,7 @@ def shell_sort(arr):
     shell_gaps.reverse()
 
     for gap in shell_gaps:
-        insertion_sort(arr, gap)
+        insertion_sort2(arr, gap)
     
     return arr
 
